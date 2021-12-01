@@ -19,5 +19,16 @@ class TestBasic(unittest.TestCase):
         input.close()
         self.assertEqual(1228, answer)
 
+    def test_basic_solve2(self):
+        data = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+        self.assertEqual(5, puzzle.solve2(data))
+    
+    def test_puzzle_answer_part2(self): 
+        input = open("01\input.txt", "r")
+        data = puzzle.parse(input.readlines()) 
+        answer = puzzle.solve2(data) 
+        input.close()
+        self.assertEqual(1257, answer)
+
 if __name__ == '__main__':  
     unittest.main()
