@@ -29,7 +29,7 @@ class TestBasic(unittest.TestCase):
         data = puzzle.parse(input.readlines()) 
         answer = puzzle.solve2(data)  
         input.close()
-        self.assertEqual(0, answer)
+        self.assertEqual(1594785890, answer)
 
 if __name__ == '__main__':  
     unittest.main()
