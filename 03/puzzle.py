@@ -31,41 +31,37 @@ def solve(data):
 
    return int(gamma,2) * int(epsilon,2)
 
-def calculateOxygenRating(input):
-   originalInput = basicParse(input)
-   rotatedInput = rotateInput(originalInput)
-
+def calculateOxygenRating(rotatedData, originalData):
    indexOfBit = 0
 
-   while len(originalInput) > 1:
-      res = Counter(rotatedInput[indexOfBit])
-      if res["1"] >= len(originalInput)/2:
-         originalInput = [i for i in originalInput if i[indexOfBit] == '1']
-         rotatedInput = rotateInput(originalInput)
+   while len(originalData) > 1:
+      res = Counter(rotatedData[indexOfBit])
+      if res["1"] >= res["0"]:
+         originalData = [i for i in originalData if i[indexOfBit] == '1']
+         rotatedData = rotateInput(originalData)
       else:
-         originalInput = [i for i in originalInput if i[indexOfBit] == '0']
-         rotatedInput = rotateInput(originalInput)
+         originalData = [i for i in originalData if i[indexOfBit] == '0']
+         rotatedData = rotateInput(originalData)
       indexOfBit += 1
 
-   return int("".join(originalInput[0]),2)
+   return int("".join(originalData[0]),2)
 
-def calculateCO2Rating(input):
-   originalInput = basicParse(input)
-   rotatedInput = rotateInput(originalInput)
-
+def calculateCO2Rating(rotatedData, originalData):
    indexOfBit = 0
 
-   while len(originalInput) > 1:
-      res = Counter(rotatedInput[indexOfBit])
-      if res["1"] >= len(originalInput)/2:
-         originalInput = [i for i in originalInput if i[indexOfBit] == '0']
-         rotatedInput = rotateInput(originalInput)
+   while len(originalData) > 1:
+      res = Counter(rotatedData[indexOfBit])
+      if res["0"] <= res["1"]:
+         originalData = [i for i in originalData if i[indexOfBit] == '0']
+         rotatedData = rotateInput(originalData)
       else:
-         originalInput = [i for i in originalInput if i[indexOfBit] == '1']
-         rotatedInput = rotateInput(originalInput)
+         originalData = [i for i in originalData if i[indexOfBit] == '1']
+         rotatedData = rotateInput(originalData)
       indexOfBit += 1
 
-   return int("".join(originalInput[0]),2)
+   return int("".join(originalData[0]),2)
 
 def solve2(data):
-   return calculateCO2Rating(data) * calculateOxygenRating(data)
+   rotatedData = rotateInput(data)
+   originalData = rotateInput(rotatedData)
+   return calculateCO2Rating(rotatedData, originalData) * calculateOxygenRating(rotatedData, originalData)
