@@ -1,14 +1,9 @@
 from collections import Counter
 from typing import ItemsView
 
-def basicParse(input):
-   output = [] 
-   for line in input:
-      output.append(list(line.strip()))
-   return output
-
 def rotateInput(input):
    rotated_input = list(zip(*input))
+   print(rotated_input)
    data = []
    for line in rotated_input:
       data.append("".join(line))
