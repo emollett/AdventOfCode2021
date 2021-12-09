@@ -47,7 +47,6 @@ def findLows(heightmap):
                 if point < line[x -1] and point < heightmap[y-1][x]:
                     lows.append([(x, y), point])
 
-    print(lows)
     return lows
 
 def calculateRisk(lows):
@@ -56,3 +55,40 @@ def calculateRisk(lows):
         risk += (int(point[1])+1)
 
     return risk
+
+def findBasin(coordinate, heightmap):
+    points_in_basin = []
+    points_to_check = [coordinate]
+
+    while len(points_to_check) > 0:
+        x, y = points_to_check[0]
+
+        # check to left
+        if x != 0 and heightmap[y][x] < heightmap[y][x-1] and heightmap[y][x-1] != '9':
+            points_to_check.append((x-1, y))
+
+        # check to right
+        if x != len(heightmap[y])-1 and heightmap[y][x] < heightmap[y][x+1] and heightmap[y][x+1] != '9':
+            points_to_check.append((x+1, y))
+
+        # check up
+        if y != 0 and heightmap[y][x] < heightmap[y-1][x] and heightmap[y-1][x] != '9':
+            points_to_check.append((x, y-1))
+
+        # check down
+        if y != len(heightmap)-1 and heightmap[y][x] < heightmap[y+1][x] and heightmap[y+1][x] != '9':
+            points_to_check.append((x, y+1))
+
+        points_in_basin.append((x, y))
+        points_to_check.remove((x, y))
+
+    return list(dict.fromkeys(points_in_basin))
+        
+def solve2(heightmap):
+    lowPoints = findLows(heightmap)
+    basin_sizes = []
+    for coordinate in lowPoints:
+        basin_sizes.append(len(findBasin(coordinate[0], heightmap)))
+    biggest_basins = sorted(basin_sizes, reverse=True)
+    return biggest_basins[0]*biggest_basins[1]*biggest_basins[2]
+

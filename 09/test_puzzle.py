@@ -21,7 +21,30 @@ class TestBasic(unittest.TestCase):
         lows = puzzle.findLows(data)
         answer = puzzle.calculateRisk(lows)  
         input.close()
-        self.assertEqual(0, answer) 
+        self.assertEqual(516, answer) 
+
+    def test_find_basin(self):
+        data = puzzle.findBasin((2, 2) , '''2199943210
+3987894921
+9856789892
+8767896789
+9899965678'''.splitlines())
+        self.assertEqual(14 ,len(data))
+
+    def test_basic_solve_2(self):
+        data = puzzle.solve2('''2199943210
+3987894921
+9856789892
+8767896789
+9899965678'''.splitlines())
+        self.assertEqual(1134 ,data)   
+
+    def test_puzzle_answer_part2(self): 
+        input = open("09/input.txt", "r")
+        data = input.read().splitlines()
+        answer = puzzle.solve2(data)  
+        input.close()
+        self.assertEqual(1023660, answer)      
 
 if __name__ == '__main__':  
     unittest.main()
