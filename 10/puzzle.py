@@ -1,18 +1,12 @@
 from typing import Counter
-import math
 
 def processBrackets(line):
     opening_brackets = []
     for bracket in line:
-        if bracket == '[' or bracket == '{' or bracket == '(' or bracket == '<':
+        lookup = {")":"(", "]":"[", "}":"{", ">":"<"}
+        if bracket in "([{<":
             opening_brackets.append(bracket)
-        elif bracket == ']' and opening_brackets[-1] == '[':
-            opening_brackets.pop()
-        elif bracket == '}' and opening_brackets[-1] == '{':
-            opening_brackets.pop()
-        elif bracket == ')' and opening_brackets[-1] == '(':
-            opening_brackets.pop()
-        elif bracket == '>' and opening_brackets[-1] == '<':
+        elif bracket in ")]}>" and opening_brackets[-1] == lookup[bracket]:
             opening_brackets.pop()
         else: return bracket
     return opening_brackets
@@ -20,15 +14,9 @@ def processBrackets(line):
 def calculateAutocompleteScore(brackets):
     score = 0
     for bracket in reversed(brackets):
+        lookup = {"(":1, "[":2, "{":3, "<":4}
         score = score * 5
-        if bracket == '(':
-            score += 1
-        if bracket == '[':
-            score += 2
-        if bracket == '{':
-            score += 3
-        if bracket == '<':
-            score += 4
+        score += lookup[bracket]
     return score
 
 def solve1(data):
@@ -47,5 +35,5 @@ def solve2(data):
             score = calculateAutocompleteScore(brackets)
             scores.append(score)
     scores.sort()
-    middle_score = scores[math.floor(len(scores)/2)]
+    middle_score = scores[len(scores)//2]
     return middle_score
