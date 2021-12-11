@@ -31,13 +31,21 @@ def oneStep(grid):
 
                 # then remove the flashed octopus from the grid for this step
                 flashed_octopuses.append(grid.pop(index))
-
+    synced = len(grid) == 0
     grid.extend(flashed_octopuses)
-    return grid
+    return grid, synced
 
 def countFlashes(grid, steps):
     flashes = 0
-    for _ in range(steps):
+    for i in range(steps):
         oneStep(grid)
         flashes += len([octopus for octopus in grid if octopus[1] == 0])
     return flashes
+
+def findSynchronisation(grid):
+    synced = False
+    i = 0
+    while not synced:
+        synced = oneStep(grid)[1]
+        i += 1
+    return i
