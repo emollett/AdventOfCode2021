@@ -1,3 +1,6 @@
+from typing import Counter
+
+
 def parse(data):
     input = []
     for line in data:
@@ -6,7 +9,7 @@ def parse(data):
         y1 = int(coordinates[0].split(",")[1])
         x2 = int(coordinates[1].split(",")[0])
         y2 = int(coordinates[1].split(",")[1])
-        input.append(([x1, y1], [x2, y2]))
+        input.append(((x1, y1), (x2, y2)))
     return input
 
 def removeDiagonal(listOfVents):
@@ -27,12 +30,19 @@ def expandCoordinates(listOfVents):
         if x1 == x2:
             # tidy this up
             for i in range(y1, y2 + 1):
-                expandedVents.append([x1, i])
+                expandedVents.append((x1, i))
             for i in range(y1, y2 - 1, -1):
-                expandedVents.append([x1, i])
+                expandedVents.append((x1, i))
         else:
             for i in range(x1, x2 + 1):
-                expandedVents.append([i, y1])
+                expandedVents.append((i, y1))
             for i in range(x1, x2 - 1, -1):
-                expandedVents.append([i, y1])
+                expandedVents.append((i, y1))
     return expandedVents
+
+def solve(data):
+    parsed_data = parse(data)
+    removed_diagonals = removeDiagonal(parsed_data)
+    lines = expandCoordinates(removed_diagonals)
+    count = len([x for x in Counter(lines).values() if x>1])
+    return count

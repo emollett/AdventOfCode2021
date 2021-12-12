@@ -14,7 +14,7 @@ class TestBasic(unittest.TestCase):
         input.close()
         self.assertEqual(360268, answer)
 
-    def test_puzzle_answer_part1(self): 
+    def test_puzzle_answer_part2(self): 
         input = open("06/input.txt", "r")
         data = list(map(int, input.readline().split(",")))
         answer = puzzle.solve(data, 256)  
