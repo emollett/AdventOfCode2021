@@ -41,7 +41,26 @@ class TestBasic(unittest.TestCase):
         input = open("05/input.txt", "r")
         answer = puzzle.solve(input.read().splitlines())  
         input.close()
-        self.assertEqual(0, answer)
+        self.assertEqual(6666, answer)
+    
+    def test_basic_solve2(self):
+        data = '''0,9 -> 5,9
+        8,0 -> 0,8
+        9,4 -> 3,4
+        2,2 -> 2,1
+        7,0 -> 7,4
+        6,4 -> 2,0
+        0,9 -> 2,9
+        3,4 -> 1,4
+        0,0 -> 8,8
+        5,5 -> 8,2'''.splitlines()
+        self.assertEqual(12, puzzle.solve2(data))
+
+    def test_puzzle_answer_part2(self): 
+        input = open("05/input.txt", "r")
+        answer = puzzle.solve2(input.read().splitlines())  
+        input.close()
+        self.assertEqual(19081, answer)
 
 if __name__ == '__main__':  
     unittest.main()
