@@ -113,7 +113,7 @@ CN -> C'''.splitlines())
         self.assertEqual(1588, answer)
 
     def test_puzzle_answer_part1(self): 
-        input = open("13/input.txt", "r")
+        input = open("14/input.txt", "r")
         data = puzzle.parse(input.read().splitlines())
         answer = puzzle.solve(data, 10)
         input.close()
@@ -230,14 +230,14 @@ CN -> C'''.splitlines())
         self.assertEqual(1588, answer)   
 
     def test_puzzle_answer_part1_with_solve2(self): 
-        input = open("13/input.txt", "r")
+        input = open("14/input.txt", "r")
         data = puzzle.parse(input.read().splitlines())
         answer = puzzle.solve2(data, 10)
         input.close()
         self.assertEqual(2509, answer)       
 
     def test_puzzle_answer_part1(self): 
-        input = open("13/input.txt", "r")
+        input = open("14/input.txt", "r")
         data = puzzle.parse(input.read().splitlines())
         answer = puzzle.solve(data, 40)
         input.close()
