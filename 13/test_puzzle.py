@@ -63,7 +63,7 @@ fold along x=55'''.splitlines())
         self.assertEqual(16, len(answer))
 
     def test_puzzle_answer_part1(self): 
-        input = open("12/input.txt", "r")
+        input = open("13/input.txt", "r")
         data = puzzle.parse(input.read().splitlines())
         answer = puzzle.oneFold(data[0], data[1][0])
         input.close()
@@ -118,7 +118,7 @@ fold along x=5'''.splitlines()
         answer= puzzle.passwordPicture(data)
 
     def test_puzzle_answer_part2(self): 
-        input = open("12/input.txt", "r")
+        input = open("13/input.txt", "r")
         data = input.read().splitlines()
         answer = puzzle.passwordPicture(data)
         input.close()
