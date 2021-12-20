@@ -1,5 +1,4 @@
-from operator import itemgetter
-from typing import Counter
+from collections import Counter
 import string
 
 def parse(data):
@@ -45,12 +44,7 @@ def updatePairFrequencies(pairs, pairFrequencies):
         pairFrequencies[newPair] += multiplier
     return pairFrequencies
 
-def updateElementFrequencies(elements, elementFrequencies, multiplier):
-    for element in elements:
-        elementFrequencies[element] += multiplier
-    return elementFrequencies
-
-def createNewPairs(pairFrequencies, insertionMap, elementFrequencies):
+def createNewPairs(pairFrequencies, insertionMap):
     pairsToUpdate = []
     for pair, frequency in pairFrequencies.items():
         if frequency > 0:
@@ -58,23 +52,29 @@ def createNewPairs(pairFrequencies, insertionMap, elementFrequencies):
             newPair1 = (pair[0]+insertion, frequency) 
             newPair2 = (insertion+pair[1], frequency)
             pairsToUpdate.extend([newPair1, newPair2])
-            elementFrequencies = updateElementFrequencies(insertion, elementFrequencies, frequency)
     pairFrequencies = updatePairFrequencies(pairsToUpdate, pairFrequencies)
-    return pairFrequencies, elementFrequencies
+    return pairFrequencies
 
 def solve2(data, rounds):
     template, insertionMap = data
     pairFrequencies = createInitialFrequencies(insertionMap)
-    elementFrequencies = dict.fromkeys(string.ascii_uppercase, 0)
-    elementFrequencies = updateElementFrequencies(template, elementFrequencies, 1)
     initial_pairs = [(letter + template[i+1], 1) for i, letter in enumerate(template[:-1])]
     pairFrequencies = updatePairFrequencies(initial_pairs, pairFrequencies)
     for _ in range(rounds):
-        pairFrequencies, elementFrequencies = createNewPairs(pairFrequencies, insertionMap, elementFrequencies)
-    score = scoreElements(elementFrequencies)
+        pairFrequencies = createNewPairs(pairFrequencies, insertionMap)
+    score = scorePairs(pairFrequencies, template)
     return score
 
-def scoreElements(elementFrequencies):
+def scorePairs(pairFrequencies, template):
+    elementFrequencies = dict.fromkeys(string.ascii_uppercase, 0)
+    for pair, frequency in pairFrequencies.items():
+        pair1 = pair[0]
+        pair2 = pair[1]
+        elementFrequencies[pair1] += frequency
+        elementFrequencies[pair2] += frequency
+    elementFrequencies[template[0]] += 1
+    elementFrequencies[template[-1]] += 1
+    elementFrequencies = {k: abs(v/2) for k, v in elementFrequencies.items()}
     score = max(elementFrequencies.values()) - min(filter(None, elementFrequencies.values()))
     return score
 
