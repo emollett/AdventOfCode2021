@@ -13,8 +13,10 @@ def parseBoards(input):
    
    for line in input:
       if line != "":
-         board.append(list(map(int, line.split())))
+         board.append(list((map(int, line.split()))))
       else:
+         rotated_board = rotateInput(board[:])
+         board.extend(rotated_board)
          if len(board)>0: data.append(board[:])
          board.clear()
    data.append(board[:])
